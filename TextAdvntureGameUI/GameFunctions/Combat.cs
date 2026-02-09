@@ -6,33 +6,45 @@ public static class Combat
 {
     public static void KnightVsOneEnemy(Knight knight, Enemy enemy)
     {
-        while (knight.Health > 0 && enemy.Health > 0)
+        while (knight.IsAlive() && enemy.IsAlive())
         {
-            UserInteraction.GameDialogue($"\n{knight.Name} (Health: {knight.Health} Attack: {knight.AttackDamage}) vs {enemy.Name}) (Health: {enemy.Health} Attack: {enemy.AttackDamage})");
-            Thread.Sleep(4000);
+            UserInteraction.GameDialogue($"\n{knight.Name} (Health: {knight.Health} Attack: {knight.AttackDamage}) \nvs\n {enemy.Name}) (Health: {enemy.Health}  Attack: {enemy.AttackDamage})");
+            Thread.Sleep(1000);
             
             UserInteraction.GameDialogue($"{knight.Name} attacks {enemy.Name}! ");
             enemy.TakeDamage(knight.Attack());
-            Thread.Sleep(4000);
+            Thread.Sleep(1000);
 
-            if (enemy.Health <= 0)
+            if (!enemy.IsAlive())
             {
                 UserInteraction.GameDialogue($"{enemy.Name} has been killed!");
-                Thread.Sleep(5000);
+                Thread.Sleep(1000);
                 break;
             }
-            
+               
             UserInteraction.GameDialogue($"{enemy.Name} Attacks {knight.Name}!");
             knight.TakeDamage(enemy.Attack());
-            Thread.Sleep(5000);
+            Thread.Sleep(1000);
             
-            if (knight.Health <= 0)
+            if (!knight.IsAlive())
             {
                 UserInteraction.GameDialogue($"{knight.Name} has been killed!");
-                Thread.Sleep(5000);
+                Thread.Sleep(1000);
                 break;
             }
             
+            
         }
+            if (!enemy.IsAlive())
+            {
+                UserInteraction.GameDialogue($"{knight.Name} loots {enemy.Name}!");
+                knight.Inventory.AddRange(enemy.Inventory);
+                knight.Gold += enemy.Gold;
+                enemy.Inventory.Clear();
+                enemy.Gold = 0;
+            }
+
+          
+            
     }
 }

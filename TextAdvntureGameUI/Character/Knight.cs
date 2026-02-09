@@ -1,29 +1,79 @@
 namespace TextAdvntureGameUI.Character;
+//using TextAdvntureGameUI.Items;
 
-public class Knight : ICharacter
+public class Knight : CharacterBase
 {
-    public string Name { get; set; }
-    public int AttackDamage { get; set; }
-    public int Health { get; set; }
-    
-    
-    
-    public int Attack()
+    public int Gold { get; set; }
+    public List<Item> Inventory { get; set; } = new();
+
+    public void AddItem(Item item)
     {
-        return AttackDamage;
+        Inventory.Add(item);
+    }
+
+    public void ShowInventory()
+    {
+        if (Inventory.Count == 0)
+        { 
+            Console.WriteLine("Inventory is empty");
+            return;
+        }
+        else
+        {
+            Console.WriteLine("Your Inventory");
+            for (int i = 0; i < Inventory.Count; i++)
+            {
+                Console.WriteLine($"{i +1}. {Inventory[i]}");
+            }
+        }
     }
     
-     // if we subtract damage from health and its less than or is at 0 we set the health to zero
-    public void TakeDamage(int damage)
+    public void UseItem(int index)
     {
-        if (Health - damage <= 0)
+        if (index >= 0 && index < Inventory.Count)
         {
-            Health = 0;
+            Console.WriteLine("Invalid item selected");
+            return;
         }
-        //else if health is not below zero we take heath subtract from it from damage and assign our new health
-        else 
+        
+        var item = Inventory[index];
+        if (item.HealAmount > 0)
         {
-            Health -= damage;
+            Health += item.HealAmount;
+            Console.WriteLine($"You used {item.Name} And Healed {item.HealAmount}");
         }
+
+        if (item.AttackBonus > 0)
+        {
+            AttackDamage += item.AttackBonus;
+            Console.WriteLine($"You Equipped {item.Name} +{item.AttackBonus} Attack");
+        }
+        Inventory.RemoveAt(index);
+        
     }
+
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  
+
 }

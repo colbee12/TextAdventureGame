@@ -2,6 +2,10 @@ namespace TextAdvntureGameUI.GameFunctions;
 
 public class StatGen
 {
+    public static int GenRandomGold()
+    {
+        return Random.Shared.Next(1, 100);
+    }
     public static int GenRandomHealth()
     {
        // var random = new Random();
@@ -15,11 +19,14 @@ public class StatGen
     {
         return Random.Shared.Next(20, 35);
     }
+    
 
     public static int GenRandomEnemyAttack()
     {
         return Random.Shared.Next(5, 16);
     }
+    
+    
     
     
 }
