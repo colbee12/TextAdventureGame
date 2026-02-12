@@ -30,13 +30,14 @@ public class Knight : CharacterBase
     
     public void UseItem(int index)
     {
-        if (index >= 0 && index < Inventory.Count)
+        if (index < 0 && index >= Inventory.Count)
         {
             Console.WriteLine("Invalid item selected");
             return;
         }
         
         var item = Inventory[index];
+        
         if (item.HealAmount > 0)
         {
             Health += item.HealAmount;

@@ -35,16 +35,30 @@ public static class Combat
             
             
         }
-            if (!enemy.IsAlive())
-            {
-                UserInteraction.GameDialogue($"{knight.Name} loots {enemy.Name}!");
-                knight.Inventory.AddRange(enemy.Inventory);
-                knight.Gold += enemy.Gold;
-                enemy.Inventory.Clear();
-                enemy.Gold = 0;
-            }
+        
+        
+        if (!enemy.IsAlive())
+        {
+            var goldLooted = enemy.Gold;
+            var itemsLooted = enemy.Inventory.Count;
 
-          
-            
+            knight.Inventory.AddRange(enemy.Inventory);
+            knight.Gold += enemy.Gold;
+
+            enemy.Inventory.Clear();
+            enemy.Gold = 0;
+
+            UserInteraction.GameDialogue($"{knight.Name} looted {goldLooted} gold and {itemsLooted} item(s)!"
+            );
+        }
+
+       // if (!enemy.IsAlive())
+       // {
+          //  UserInteraction.GameDialogue($"{knight.Name} loots {enemy.Name}!");
+          //  knight.Inventory.AddRange(enemy.Inventory);
+          //  knight.Gold += enemy.Gold;
+           // enemy.Inventory.Clear();
+          //  enemy.Gold = 0;
+      // }
     }
 }
